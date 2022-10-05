@@ -8,7 +8,7 @@ const TextInput = ({ name, onChange, value, placeholder }) => {
         name={name}
         onChange={onChange}
         value={value}
-        className="w-full bg-white bg-opacity-20 py-4 px-7 rounded-sm font-normal text-white"
+        className="w-full bg-white bg-opacity-20 py-4 px-7 rounded-md font-normal text-white"
         placeholder={placeholder}
       />
     </div>

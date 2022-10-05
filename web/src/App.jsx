@@ -6,6 +6,7 @@ import Header from "./components/Header";
 function App() {
   const [state, setState] = useState({ message: "", name: "" });
   const [chat, setChat] = useState([]);
+  const [isEn, setEn] = useState(false)
 
   const socketRef = useRef();
 
@@ -43,44 +44,48 @@ function App() {
 
 
   return (
-    <div className="h-screen">
-      <Header />
+    <div className="h-screen" dir={isEn ? 'ltr' : 'rtl'}>
+      <Header isEn={isEn} />
       <form
         onSubmit={onMessageSubmit}
-        div
         className="grid grid-cols-12 w-full mx-auto h-full pt-24"
       >
         <div className="col-span-3 bg-[#1b1b1b] text-stone-200 font-bold p-8 relative">
-          <h2 className="text-2xl py-10">Your Name</h2>
+          <h2 className="text-2xl py-10">{isEn ? 'Your Name' : 'نام شما'}</h2>
           <div className="">
             <TextInput
               name="name"
               onChange={(e) => onTextChange(e)}
               value={state.name}
-              placeholder="Type your name here"
+              placeholder={isEn ? "Type your name here" : "نام خود را وارد کنید"}
             />
           </div>
         </div>
 
         <div className="grid grid-cols-12 gap-2 w-full absolute left-0 bottom-0 bg-[#262626] border-t-2 border-stone-900 py-6">
-          <div className="col-span-3"></div>
+          <div className="col-span-3 flex flex-row justify-center items-center gap-4">
+              <h2 className="text-xl text-white font-bold">{isEn ? 'Language' : 'زبان'}: </h2>
+              <a className="px-3 py-1 text-white bg-white bg-opacity-20 rounded-md hover:bg-opacity-10 cursor-pointer" onClick={() => setEn(true)}>{isEn ? 'En' : 'انگلیسی'}</a>
+              <a className="px-3 py-1 text-white bg-white bg-opacity-20 rounded-md hover:bg-opacity-10 cursor-pointer" onClick={() => setEn(false)}>{isEn ? 'Fa' : 'فارسی'}</a>
+          </div>
+
           <div className="col-span-9 flex flex-row gap-2 px-2">
             <div className="w-full">
           <TextInput
             name="message"
             onChange={(e) => onTextChange(e)}
             value={state.message}
-            placeholder="Type your message here"
+            placeholder={isEn ? "Type your message here" : "پیام خود را اینجا وارد کنید..."}
           />
             </div>
-          <button className="bg-[#3d3d3d] text-white py-4 w-[200px] rounded-md hover:bg-[#333] cursor-pointer transition font-bold">Send Message</button>
+          <button className="bg-[#3d3d3d] text-white py-4 w-[200px] rounded-md hover:bg-[#333] cursor-pointer transition font-bold">{isEn ? 'Send Message' : 'ارسال پیام'}</button>
           </div>
         </div>
 
         <div className="col-span-9 bg-[#222] py-10 h-full">
           {chat.length === 0 ? (
             <h1 className="mx-auto text-center text-stone-200">
-              nothing here yet, start a conversation
+              {isEn ? 'nothing here yet, start a conversation' : 'هنوز خبری نیست. گفتگو خود را شروع کنید'}
             </h1>
           ) : null}
 
